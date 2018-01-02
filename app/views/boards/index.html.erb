@@ -9,12 +9,12 @@
 
   <tbody>
     <% @boards.each do |board| %>
-      <tr>
+      <tr get_id = "<%= board.id %>" >
         <td><%= board.id %></td>
         <td class ="title"><%= board.title %></td>
         <td><%= link_to '보기', board, class: 'btn btn-primary' %></td>
-        <td><%= link_to '수정', edit_board_path(board), class: 'btn btn-success' %></td>
-        <td><%= link_to '삭제', board, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <!-- <td><%= link_to '수정', edit_board_path(board), class: 'btn btn-success' %></td>
+        <td><%= link_to '삭제', board, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
       </tr>
     <% end %>
   </tbody>
@@ -23,10 +23,21 @@
 <br>
 
 <%= link_to '새글쓰기', new_board_path, class: 'btn btn-dark' %>
-<a class ='btn btn-warning' id='change_title'>제목바꾸기</a>
+  <a class ='btn btn-warning' id='change_title'>제목바꾸기</a>
+  <a class = 'btn btn-danger color-btn'change_color = "text-danger">빨강</a>
+  <a class = 'btn btn-primary color-btn'change_color = "text-primary">파랑</a>
+  <a class = 'btn btn-warning color-btn'change_color = "text-warning">노랑</a>
+
 <% content_for :script do %>
   <script>
+  var show = document.getElementsByClassName('get_id');
+
+  show.onclick = function(){
+    var move = document.getElementsByClassName('title');
+      window.location.href = "/boards/:id"
+  }
 
   </script>
   <script src = "change_title.js"></script>
+  <script src = "change_color.js"></script>
 <% end %>

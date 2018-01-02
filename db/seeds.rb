@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+20.times do
+  Board.create(
+    title: Faker::Movie.quote,
+    contents: Faker::Lorem.paragraphs.join.to_s,
+    user_id: Faker::Color.color_name
+  )
+end
