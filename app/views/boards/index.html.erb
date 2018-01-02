@@ -1,10 +1,8 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Boards</h1>
-
-<table>
+<table class = "table table-hover">
   <thead>
     <tr>
+      <th width= "15%">글번호</th>
+      <th width= "60%">제목</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -12,9 +10,11 @@
   <tbody>
     <% @boards.each do |board| %>
       <tr>
-        <td><%= link_to 'Show', board %></td>
-        <td><%= link_to 'Edit', edit_board_path(board) %></td>
-        <td><%= link_to 'Destroy', board, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= board.id %></td>
+        <td class ="title"><%= board.title %></td>
+        <td><%= link_to '보기', board, class: 'btn btn-primary' %></td>
+        <td><%= link_to '수정', edit_board_path(board), class: 'btn btn-success' %></td>
+        <td><%= link_to '삭제', board, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -22,4 +22,25 @@
 
 <br>
 
-<%= link_to 'New Board', new_board_path %>
+<%= link_to '새글쓰기', new_board_path, class: 'btn btn-dark' %>
+<a class ='btn btn-warning' id='change_title'>제목바꾸기</a>
+<% content_for :script do %>
+  <script>
+    // alert("여기는 인덱스 페이지 입니다.");
+    // 1. 이벤트를 넣어준 html element를 찾는다.
+    var btn = document.getElementById('change_title');
+    // 2. 해당 element에 원하는 이벤트를 달아준다.
+    btn.onclick = function(){
+    //실행문
+    // 3. 이벤트가 발생했을 경우 실행하는 함수를 만들어 준다.
+    // 버튼을 누르면 prompt 창이 떠서 입력메시지를 입력할 수 있고
+      var title = prompt('바꿀 제목을 입력하세요.');
+    // 바꿀 내용물(html element)이 어디에 있는지 찾는다.
+      var titles = document.getElementsByClassName('title');
+      for(var i = 0; i<titles.length; i++){
+    // 해당 내용으로 모든 제목을 바꿔 버린다.
+        titles[i].textContent = title;
+      }
+    }
+  </script>
+<% end %>

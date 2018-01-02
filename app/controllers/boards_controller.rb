@@ -1,6 +1,6 @@
 class BoardsController < ApplicationController
   before_action :set_board, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!, except: [:index, :show]
   # GET /boards
   # GET /boards.json
   def index
@@ -24,7 +24,7 @@ class BoardsController < ApplicationController
   # POST /boards
   # POST /boards.json
   def create
-    @board = Board.new(board_params)
+    @board = current_user.boards.new(board_params)
 
     respond_to do |format|
       if @board.save
@@ -69,6 +69,6 @@ class BoardsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def board_params
-      params.fetch(:board, {})
+      params.require(:board).permit(:title, :contents)
     end
 end
