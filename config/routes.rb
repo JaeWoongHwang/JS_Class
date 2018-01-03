@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
-  resources :boards
+  resources :boards do
+    member do
+      post '/comments'  => 'boards#create_comment', as: :create_comment_to
+    end
+    member do
+      delete '/comments/:id' => 'boards#delete_comment', as: :delete_comment_to
+    end
+    collection do
+      get '/:board_id/like' => 'boards#like_board', as: :like
+    end
+  end
+
   root 'boards#index'
 
   # Sign in
@@ -12,4 +23,6 @@ Rails.application.routes.draw do
 
   # Sign out
   delete 'signout' => 'sessions#signout', as: :user_signout  # 로그아웃
+
+
 end
