@@ -10,7 +10,7 @@ User.create(
   password: "123",
   password_confirmation: "123")
 
-20.times do
+1000.times do
   Board.create(
     title: Faker::Movie.quote,
     contents: Faker::Lorem.paragraphs.join.to_s,

@@ -3,8 +3,37 @@
    <label for="inputEmail" class="sr-only">Email address</label>
    <input type="email" name = "email" class="form-control" placeholder="Email address" autofocus>
    <label for="inputPassword" class="sr-only">Password</label>
-   <input type="password" name = "password" class="form-control" placeholder="Password" >
+   <input type="password" name = "password" class="form-control" placeholder="Password" id ="pwd">
    <label for="inputPassword" class="sr-only">Password Confirmation</label>
-   <input type="password"  name = "password_confirmation" class="form-control" placeholder="password_confirmation" >
-   <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+   <input type="password"  name = "password_confirmation" class="form-control" placeholder="password_confirmation" id ="pwd_c">
+   <button class="btn btn-lg btn-primary btn-block" type="submit" disabled>Sign up</button>
+<% end %>
+
+<%= content_for :script do %>
+
+   <script>
+   // 이메일 중복검사
+   $(function(){
+      $('input[name=email]').on('change', function(){
+         var id = $(this).val();
+         $.ajax({
+            url: '/check_email',
+            method: "POST",
+            data: {
+               email: id
+            }
+         })
+      })
+   })
+
+   // Password 와 Password_confirmation 일치여부 검사
+   $(function(){
+      $('#pwd_c').on('change', function(){
+         if ($("#pwd").val() != $("#pwd_c").val()) {
+             alert("비밀번호가 일치하지 않습니다.");
+         }
+      })
+   })
+
+   </script>
 <% end %>
